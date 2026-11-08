@@ -13,6 +13,7 @@ Proven on **The Bridge That Fell for a Song**, a 67 s short about the 1831 Broug
 | `templates/bridge/` | The full source of the bridge short: world, characters, ink, lens blur, grade, story/camera |
 | `templates/audio/` | The synthesized sound: SFX, march music, the mix with ducking and loudness |
 | `skills/edge-tts-voice/` | Free text-to-speech narration (edge-tts): `voice.wav` + word timings `words.json` |
+| `skills/ffmpeg-video/` | Tested ffmpeg recipes (mux, export, loudness, cut, join, vertical, previews) + `check.py` file QA |
 | `templates/scripts/` | Stills, side-by-side sheets, shot merge and frame-by-frame QA helpers |
 | `references/STYLE_BIBLE.md` | The script and visual formula measured from 20 reference shorts |
 | `references/reports/` | Seven measured reports: motion, depth, textures, characters, lighting, outlines, grade |
@@ -22,7 +23,7 @@ Proven on **The Bridge That Fell for a Song**, a 67 s short about the 1831 Broug
 ## Install
 1. Copy this folder to `~/.claude/skills/cartoon-3d-short/` (clone it there, or download the ZIP).
 2. You need [Remotion](https://www.remotion.dev/) with `@remotion/three`, plus Node, Python 3 and ffmpeg.
-3. For free voice-over, also copy `skills/edge-tts-voice/` to `~/.claude/skills/edge-tts-voice/` and run `pip install edge-tts`.
+3. For free voice-over, also copy `skills/edge-tts-voice/` to `~/.claude/skills/edge-tts-voice/` and run `pip install edge-tts`. Copy `skills/ffmpeg-video/` to `~/.claude/skills/ffmpeg-video/` for the ffmpeg recipes.
 4. In Claude Code, say: *"Use the cartoon short skill and make a short about …"*.
 
 Claude then follows `SKILL.md`: topic and facts, then script, then voice, then the shot plan in `story.ts`, then stills, then renders. Agents check your frames against the reports and the frames, and you get the final 2K render and sound mix.

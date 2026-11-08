@@ -76,6 +76,7 @@ User rules that apply:
 10. **Final render.**
     - `npx remotion render src/index.ts <Comp> out/<name>/video.mp4 --codec h264 --crf 16 --scale 1.3333`
     - Mux with `-map 0:v:0 -map 1:a:0` (Remotion writes a silent audio track).
+    - ffmpeg recipes for mux, export, loudness, cuts and previews are in the `ffmpeg-video` skill (`skills/ffmpeg-video/`). Its `scripts/check.py final.mp4 --size 1440x2560 --fps 30 --target -15` is a quick pre-QA check.
     - QA: `python scripts/short_qa.py final.mp4 out/<name>/qa shots.json` checks every frame for black, white, frozen and pop frames, plus loudness and sheets.
     - Fix anything it finds, then run a deep Opus audit.
 11. **Deliver.** SendUserFile the final mp4, update memory, write notes.
