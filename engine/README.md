@@ -37,13 +37,27 @@ On a PC with a GPU, use `--gl angle`. It is far faster than the CPU default in t
 
 ## Presets
 `node tools/catalogue.mjs` writes **`presets/catalogue.json`**: every kit, anchor, camera, action, outfit, expression and
-music preset with a one-line description (about 1,100 tokens). It's generated from the code, so it never drifts. It is the only
-thing an AI helper needs to see.
+music preset with a one-line description (about 3,300 tokens for all 234 presets). It's generated from the code, so it
+never drifts. It is the only thing an AI helper needs to see.
 
-### Props library (48 props, usable in any scene)
+### Scenes (9 kits)
+| Kit | For | Signature anchors |
+|---|---|---|
+| harbour | history / war | clock, palace, palace-flag, fleet, deck-gun, town, beach |
+| castle | medieval | castle, gate (drawbridge), keep, wall, moat, field, village |
+| desert | ancient / adventure | pyramids, statue, oasis, dunes, caravan, camp |
+| jungle | adventure / nature | river, temple, waterfall, canopy, clearing |
+| savanna | animals | elephant, giraffe, lion, zebras, waterhole, acacia, mountain |
+| ocean | sea / nature | island, lighthouse-rock, whale, sailboat, sea, horizon |
+| space | science / space | rocket (launch), pad, earth, planet, lander, base, satellite |
+| lab | science | coil (spark), beakers (bubble), blackboard, machine, bench |
+| city | modern / everyday | street, crossing, shop, skyline, taxi, bus, cars |
+Every kit has a standing point for `from-to` shots (lookout, sidewalk, doorway, trail, beach, gate-road, deck...).
+
+### Props library (49 props, usable in any scene)
 | Group | Props |
 |---|---|
-| Animals (9) | elephant, giraffe, lion, zebra, horse, cow, dog, camel, birds (flock) |
+| Animals (10) | elephant, giraffe, lion, zebra, horse, cow, dog, camel, birds (flock), whale |
 | Vehicles (10) | car, car-blue, taxi, bus, jeep, cannon, rowboat, sailboat, plane, tank |
 | Nature (9) | acacia, palm, pine, oak, bush, rock, cactus, log, flowers |
 | Buildings (8) | house, barn, hut, tent, castle-tower, lighthouse, windmill, pyramid |

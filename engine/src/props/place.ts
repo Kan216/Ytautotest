@@ -28,7 +28,8 @@ export const placeProps = (W: KitWorld, list: PropPlace[]) => {
     const A = W.anchors[pl.at];
     if (!A) throw new Error(`prop "${pl.id}": no anchor "${pl.at}" in this kit`);
     const x = A.p[0] + (pl.dx ?? 0), z = A.p[2] + (pl.dz ?? 0), boat = def.id.endsWith("boat");
-    const y = (boat ? 0 : A.ground ?? W.floor(x, z)) + (pl.dy ?? 0);
+    const fl = W.floor(x, z), gy = A.ground !== undefined && A.ground > fl + 0.5 ? A.ground : fl; // decks/platforms win, else the terrain
+    const y = (boat ? 0 : gy) + (pl.dy ?? 0);
     let yaw = ((pl.yaw ?? 0) * Math.PI) / 180;
     const F = pl.face ? W.anchors[pl.face] : undefined;
     if (F) yaw = Math.atan2(-(F.p[2] - z), F.p[0] - x);

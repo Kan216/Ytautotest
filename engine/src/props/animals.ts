@@ -111,4 +111,26 @@ export const ANIMALS: PropDef[] = [
       return { obj: g, parts: { wings } };
     },
     animate: (p, s) => (p.parts.wings as THREE.Object3D[]).forEach((w, k) => { w.rotation.x = w.userData.s * 0.8 * Math.sin(s.t * 9 + k * 0.7); }) },
+  { id: "whale", cat: "animal", desc: "big blue whale that surfaces and spouts (for water)", h: 4, len: 14, move: "drive", speed: 4,
+    acts: { spout: "blows a water spout", dive: "arches and dives under" },
+    build: () => {
+      const g = new THREE.Group(), body = new THREE.Group(); g.add(body);
+      const blue = M("#3f6f9a"), belly = M("#c8d8e0");
+      body.add(ell(7, 2, 2.4, blue, 0, 0.4, 0)); body.add(ell(5, 1.2, 2, belly, 0.5, -0.4, 0));
+      const tail = new THREE.Group(); tail.position.set(-6.5, 0.6, 0); body.add(tail);
+      tail.add(ell(2, 0.25, 2.2, blue, -1.6, 0.3, 0));
+      for (const s of [-1, 1]) body.add(ell(1.4, 0.2, 0.6, blue, 2.5, -0.6, s * 2.2));
+      for (const s of [-1, 1]) body.add(mesh(new THREE.SphereGeometry(0.18, 8, 6), M("#1c1720"), 5.2, 0.8, s * 1.6));
+      const spout = new THREE.Group(); spout.position.set(3.5, 2.3, 0); body.add(spout);
+      for (let k = 0; k < 5; k++) spout.add(ell(0.5 + k * 0.25, 0.9, 0.5 + k * 0.25, M("#eaf6fb"), 0, 0.8 + k * 1.1, 0));
+      spout.scale.setScalar(0.001);
+      return { obj: g, parts: { body, tail, spout } };
+    },
+    animate: (p, s) => {
+      const body = p.parts.body as THREE.Object3D, tail = p.parts.tail as THREE.Object3D, sp = p.parts.spout as THREE.Object3D;
+      const dv = s.since.dive, dvU = dv !== undefined && dv > 0 ? Math.min(1, dv / 3) : 0;
+      body.position.y = 0.3 * Math.sin(s.t * 0.8) - dvU * dvU * 9; body.rotation.z = -0.5 * Math.sin(Math.PI * dvU);
+      tail.rotation.z = 0.25 * Math.sin(s.t * 1.6) + (dvU > 0.3 ? 0.8 * Math.sin(Math.PI * (dvU - 0.3) / 0.7) : 0);
+      const u = s.since.spout; sp.scale.setScalar(u !== undefined && u > 0 && u < 2.2 ? Math.max(0.001, Math.sin(Math.min(1, u / 0.5) * Math.PI / 2) * Math.min(1, (2.2 - u) / 0.6)) : 0.001);
+    } },
 ];

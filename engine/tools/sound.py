@@ -99,6 +99,21 @@ def ambience(kit, dur, r):
     if kit == "savanna":
         return 0.6 * np.asarray(breeze(dur, r, level=1.0)) + 0.3 * wide(mono(bird_chirps(dur, r, density=0.4)), r) + 0.15 * wide(mono(crickets(dur, r)), r)
     if kit == "city": return wide(0.6 * traffic(dur, r), r)
+    if kit == "castle" or kit == "countryside":
+        return 0.6 * np.asarray(breeze(dur, r, level=0.9)) + 0.35 * wide(mono(bird_chirps(dur, r, density=0.5)), r)
+    if kit == "jungle":
+        return 0.4 * wide(mono(bird_chirps(dur, r, density=1.2)), r) + 0.25 * wide(mono(crickets(dur, r, voices=5)), r) + 0.4 * np.asarray(water_bed(dur, r, close=0.3))
+    if kit == "desert": return 0.9 * np.asarray(breeze(dur, r, level=1.3, gust=0.35, bright=600))
+    if kit == "ocean":
+        y = 0.8 * np.asarray(water_bed(dur, r, close=0.7, slosh_rate=0.4)) + 0.4 * np.asarray(breeze(dur, r, level=0.9))
+        for k in range(int(dur / 3)): place(y, pan(gull(r), r.uniform(-0.6, 0.6)), r.uniform(0.3, max(0.4, dur - 0.8)), 0.08)
+        return y
+    if kit == "lab":
+        n = ns(dur); t = np.arange(n) / SR; y = 0.4 * np.sin(TAU * 60 * t) + 0.2 * np.sin(TAU * 120 * t) + 0.15 * lp(colored(n, r, 1.0), 300)
+        for k in range(int(dur * 1.5)):
+            i = int(r.uniform(0, max(1, n - ns(0.12)))); f0 = r.choice([880, 1320, 1760]); m = ns(0.08)
+            y[i:i + m] += 0.25 * np.sin(TAU * f0 * np.arange(m) / SR) * np.hanning(m)
+        return wide(y, r)
     return np.asarray(breeze(dur, r, level=0.6))
 
 
@@ -212,6 +227,32 @@ def main():
         elif aid in ("charge", "stampede", "run"):
             for k in range(int(max(1, (t1 - t0) * 8))): place(sfx, pan(pk(thud(r)), r.uniform(-0.5, 0.5)), t0 + k / 8 + r.uniform(0, 0.03), 0.18)
             cue(t0, "running thuds")
+        elif aid == "drive":
+            place(sfx, pk(wide(lp(colored(ns(max(1.0, t1 - t0 + 1.5)), r, 1.2), 300) * (0.7 + 0.3 * np.sin(TAU * 18 * np.arange(ns(max(1.0, t1 - t0 + 1.5))) / SR)), r)), t0, 0.25); cue(t0, f"engine at {at}")
+        elif aid == "fly":
+            place(sfx, pk(wide(whoosh(2.5, r, peak=1.2, f_lo=200, f_hi=1400, tail=0.8), r)), t0, 0.2); cue(t0, f"fly-by at {at}")
+        elif aid == "drawbridge":
+            for k in range(14): place(sfx, pan(pk(tick(r, k % 2 == 1)), 0.1), t0 + k * 0.17, 0.25)
+            place(sfx, pan(pk(thud(r)), 0.0), t0 + 2.5, 0.5); cue(t0, "drawbridge chain rattle + landing thud")
+        elif aid == "spark":
+            for k in range(6):
+                n = ns(0.15); place(sfx, pan(pk(hp(colored(n, r, 0.0), 2000) * np.exp(-np.arange(n) / ns(0.03))), r.uniform(-0.3, 0.3)), t0 + k * 0.18, 0.35)
+            cue(t0, "electric zaps")
+        elif aid == "bubble":
+            for k in range(20):
+                f0 = r.uniform(400, 1200); n = ns(0.06); place(sfx, pan(np.sin(TAU * np.cumsum(np.linspace(f0, f0 * 1.8, n)) / SR) * np.hanning(n), r.uniform(-0.4, 0.4)), t0 + k * 0.08, 0.15)
+            cue(t0, "bubbling")
+        elif aid == "spout":
+            place(sfx, pk(wide(whoosh(1.4, r, peak=0.2, f_lo=500, f_hi=4000, air=0.5), r)), t0, 0.35); cue(t0, "whale spout")
+        elif aid == "dive":
+            place(sfx, pk(wide(water_bed(2.0, r, close=1.2, slosh_rate=2.0), r)), t0 + 0.5, 0.4); cue(t0, "splash dive")
+        elif aid in ("moo", "bark"):
+            n = ns(0.9 if aid == "moo" else 0.25); tt_ = np.arange(n) / SR; f = (130 if aid == "moo" else 420) * (1 + 0.15 * np.sin(np.pi * tt_ / tt_[-1]))
+            x = np.sign(np.sin(TAU * np.cumsum(f) / SR)) * np.sin(np.pi * tt_ / tt_[-1]) ** 0.5
+            for k in range(1 if aid == "moo" else 2): place(sfx, pan(pk(lp(x, 1500 if aid == "moo" else 3000)), 0.1), t0 + k * 0.35, 0.3)
+            cue(t0, aid)
+        elif aid == "open":
+            place(sfx, pan(pk(mono(wood_crack(r))), 0.0), t0, 0.2); place(sfx, pk(wide(bell(r, 1046), r)), t0 + 0.2, 0.2); cue(t0, "chest creak + sparkle")
         elif aid in ("honk", "traffic-jam"):
             for k in range(3): place(sfx, pan(pk(horn(r)), r.uniform(-0.6, 0.6)), t0 + k * 0.35, 0.18)
             cue(t0, "car horns")

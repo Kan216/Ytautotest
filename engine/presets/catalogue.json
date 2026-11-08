@@ -57,6 +57,15 @@
    "cat": "animal",
    "move": "fly"
   },
+  "whale": {
+   "desc": "big blue whale that surfaces and spouts (for water)",
+   "cat": "animal",
+   "move": "drive",
+   "acts": {
+    "spout": "blows a water spout",
+    "dive": "arches and dives under"
+   }
+  },
   "car": {
    "desc": "small red car",
    "cat": "vehicle",
@@ -309,6 +318,119 @@
     "herd-spot": "open grass where the zebra herd grazes"
    },
    "actions": {}
+  },
+  "city": {
+   "desc": "modern city avenue: road with a zebra crossing, sidewalks, shopfronts with awnings, skyscrapers, traffic light, cars, taxi, bus",
+   "ambience": "city",
+   "anchors": {
+    "street": "the avenue (wide)",
+    "crossing": "the zebra crossing",
+    "shop": "a shopfront with a coloured awning",
+    "building": "a mid-rise building across the street",
+    "skyline": "skyscrapers in the distance",
+    "sidewalk": "standing on the sidewalk facing the street (use with from-to)",
+    "corner": "standing at the corner by the crossing (use with from-to)",
+    "lane-east": "the eastbound lane",
+    "lane-west": "the westbound lane",
+    "taxi": "a yellow taxi (drive, honk)",
+    "red-car": "a red car (drive, honk)",
+    "bus": "a green bus (drive, honk)",
+    "blue-car": "a blue car (drive, honk)",
+    "traffic-light": "the traffic light by the crossing"
+   },
+   "actions": {}
+  },
+  "castle": {
+   "desc": "medieval castle: stone walls with battlements, four round towers, a tall keep with banners, gatehouse + drawbridge over a moat, village, windmill, field with tents",
+   "ambience": "countryside",
+   "anchors": {
+    "castle": "the whole castle",
+    "gate": "the gatehouse and drawbridge",
+    "keep": "the tall central keep with banners",
+    "wall": "a section of the battlements",
+    "moat": "the moat",
+    "field": "the open field in front of the castle (battles, camps)",
+    "village": "the village of cottages",
+    "hill": "a hill with a windmill",
+    "gate-road": "standing on the road facing the castle gate (use with from-to)",
+    "tower-1": "a corner tower (back left)",
+    "tower-2": "a corner tower (back right)",
+    "tower-3": "a corner tower (front left)",
+    "tower-4": "a corner tower (front right)"
+   },
+   "actions": {
+    "drawbridge": "the drawbridge lowers over the moat"
+   }
+  },
+  "jungle": {
+   "desc": "rainforest: green river, giant trees, ferns, stepped stone temple ruin in a clearing, cliff with a waterfall, parrots, canoe, camp",
+   "ambience": "jungle",
+   "anchors": {
+    "river": "the jungle river",
+    "temple": "the stepped stone temple ruin",
+    "temple-top": "the shrine on top of the temple",
+    "waterfall": "a waterfall pouring from a cliff",
+    "canopy": "the tree canopy",
+    "clearing": "a clearing at the temple's foot with a camp",
+    "trail": "standing on the trail facing the temple (use with from-to)",
+    "riverbank": "standing on the riverbank (use with from-to)",
+    "parrots": "a flock of birds (fly)",
+    "canoe": "a small boat on the river (drive)"
+   },
+   "actions": {}
+  },
+  "desert": {
+   "desc": "sand desert: rolling dunes, three pyramids, a sphinx-like statue, an oasis with palms, a camel caravan, a nomad camp",
+   "ambience": "desert",
+   "anchors": {
+    "pyramids": "all three pyramids (wide)",
+    "pyramid": "the great pyramid",
+    "great-pyramid": "the great pyramid itself",
+    "statue": "a lion-bodied stone statue",
+    "oasis": "an oasis pool with palm trees",
+    "dunes": "rolling sand dunes",
+    "caravan-route": "the track the caravan walks",
+    "caravan": "a caravan of five camels (run)",
+    "camp": "a nomad camp with tents and a fire",
+    "lookout": "standing on a dune facing the pyramids (use with from-to)"
+   },
+   "actions": {}
+  },
+  "ocean": {
+   "desc": "open ocean: a small palm island with a hut, a rocky islet with a lighthouse, a sailboat, a rowboat, a whale, gulls",
+   "ambience": "ocean",
+   "anchors": {
+    "island": "the small palm island",
+    "hut": "the hut on the island",
+    "lighthouse-rock": "the lighthouse on its rocky islet",
+    "sea": "the open sea (wide)",
+    "horizon": "the far horizon",
+    "beach": "standing on the island beach facing the sea (use with from-to)",
+    "open-water": "open water where the whale swims",
+    "whale": "a whale (spout, dive, drive to swim)",
+    "sailboat": "a sailboat (drive)",
+    "rowboat": "a rowboat (drive)",
+    "gulls": "seagulls (fly)"
+   },
+   "actions": {}
+  },
+  "lab": {
+   "desc": "science lab hall: benches with glowing beakers, blackboard of diagrams, tesla coil, big machine with dials, shelves, window wall",
+   "ambience": "lab",
+   "anchors": {
+    "lab": "the whole lab (wide)",
+    "bench": "a lab bench",
+    "beakers": "glowing beakers on a bench (bubble)",
+    "coil": "a tesla coil (spark)",
+    "machine": "a big machine with dials",
+    "blackboard": "a blackboard covered in diagrams",
+    "window": "the window wall",
+    "doorway": "standing in the doorway facing the lab (use with from-to)"
+   },
+   "actions": {
+    "spark": "the tesla coil throws bright sparks",
+    "bubble": "the beakers bubble and fizz"
+   }
   }
  },
  "cameras": {
