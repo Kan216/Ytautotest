@@ -19,6 +19,7 @@ import { Expr } from "./core/toon";
 import { V3 } from "./core/geo";
 import { Timeline, Shot } from "./core/types";
 import { KITS } from "./kits";
+import { placeProps } from "./props/place";
 
 type Props = { timeline: Timeline; audio?: string; post?: { dpr?: number; ink?: boolean; lens?: boolean } };
 const fwd = new THREE.Vector3(), fpt = new THREE.Vector3();
@@ -37,6 +38,7 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
     const kit = KITS[shot.kit];
     if (!kit) throw new Error(`unknown kit "${shot.kit}"`);
     const W = kit.build(shot.seed ?? 0);
+    const P = placeProps(W, shot.props ?? []);
     const env = new Env(W.root, W.water, W.sky);
     const sc = new ShotCamera(shot.camera, W);
     const st = sc.start(), sun = env.sunDir(st);
@@ -46,14 +48,18 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
     const subj = W.anchors[shot.camera.subject], from = shot.camera.from ? W.anchors[shot.camera.from] : undefined;
     const charPos = shot.chars.map((c): V3 => {
       const A = W.anchors[c.place];
-      if (A) return [A.p[0], A.ground ?? A.p[1], A.p[2]];
+      if (A) { // stand beside the anchor, toward the camera's right, so the character never sits inside a prop
+        const fx = A.p[0] - st.pos[0], fz = A.p[2] - st.pos[2], l = Math.hypot(fx, fz) || 1, side = c.angle !== undefined ? Math.sign(c.angle) || 1 : 1;
+        const o = Math.min(1.8, A.size * 0.3 + 0.4) * side;
+        return [A.p[0] - (fz / l) * o, A.ground ?? A.p[1], A.p[2] + (fx / l) * o];
+      }
       const ang = c.angle ?? (c.place === "left" ? 7 : c.place === "right" ? -7 : 0);
       const gy = from?.ground ?? subj.ground ?? W.floor(st.pos[0], st.pos[2]);
       return toward(st.pos, subj.p, c.dist ?? 6, ang, gy);
     });
     const kicks: [number, number][] = tl.actions.filter((a) => KICK[a.id] || a.p?.kick !== undefined)
       .map((a) => [a.f, typeof a.p?.kick === "number" ? (a.p.kick as number) : KICK[a.id]]);
-    return { W, env, sc, sun, cards, fx, soft, charPos, kicks, subj };
+    return { W, P, env, sc, sun, cards, fx, soft, charPos, kicks, subj };
   }, [shot, tl]);
   const fxp = useMemo(() => ({
     ink: new InkPass(scene, cam), lens: new LensBlur({ maxCoC: 24, nearScale: 1.2 }), bloom: makeBloom(),
@@ -86,6 +92,7 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
   S.fx.reset(); S.soft.reset();
   const ctx = { t, f, fps: tl.fps, cam, actions: tl.actions, fx: S.fx, soft: S.soft, shot };
   S.W.update(ctx);
+  S.P.update(ctx);
   runActions(ctx, S.W);
   shot.chars.forEach((ch, i) => {
     let e = ch.expr[0]?.[1] ?? "neutral";

@@ -40,8 +40,27 @@ On a PC with a GPU, use `--gl angle`. It is far faster than the CPU default in t
 music preset with a one-line description (about 1,100 tokens). It's generated from the code, so it never drifts. It is the only
 thing an AI helper needs to see.
 
+### Props library (48 props, usable in any scene)
+| Group | Props |
+|---|---|
+| Animals (9) | elephant, giraffe, lion, zebra, horse, cow, dog, camel, birds (flock) |
+| Vehicles (10) | car, car-blue, taxi, bus, jeep, cannon, rowboat, sailboat, plane, tank |
+| Nature (9) | acacia, palm, pine, oak, bush, rock, cactus, log, flowers |
+| Buildings (8) | house, barn, hut, tent, castle-tower, lighthouse, windmill, pyramid |
+| Objects (12) | crate, barrel, campfire, flagpole, lamppost, bench, signpost, table, chest, well, traffic-light, telescope |
+
+Place props for every shot of a kit (`"props"` at the story level, with `"kit"`) or for one shot (`"props"` in the shot):
+```json
+"props": [ { "id": "elephant", "name": "jumbo", "at": "beach", "dx": 8, "dz": -2, "face": "palace", "scale": 1 },
+           { "id": "zebra", "group": "herd", "at": "plain", "dx": -4 }, { "id": "zebra", "group": "herd", "at": "plain", "dx": 0 } ]
+```
+A placed prop becomes an anchor (its `name`, else its id; `group` makes a group anchor). Cameras can frame it, characters
+can stand by it, and actions can target it: `run` / `drive` / `fly` move it along its heading, `fire` uses its muzzle
+(cannon, tank), and prop actions include `trumpet`, `roar`, `moo`, `bark`, `honk`, `open`.
+
 | Library | Where | Add one by |
 |---|---|---|
+| Props | `src/props/{animals,vehicles,nature,buildings,objects}.ts` | add a `PropDef` (build from shapes, optional `animate`) |
 | Scene kits + anchors | `src/kits/*.ts` | write a `KitDef` (build function + named anchors), register in `src/kits/index.ts` |
 | Cameras | `src/core/cameras.ts` | add a two-framing preset in subject terms (azimuth, elevation, distance) |
 | Generic actions | `src/core/actions.ts` | add an effect, plus its sound recipe in `tools/sound.py` |

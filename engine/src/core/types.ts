@@ -14,8 +14,9 @@ export type CharSpec = {
   outfit: string; place: string; dist?: number; angle?: number; view?: "side" | "front"; mirror?: boolean; scale?: number;
   expr: [number, string][];   // [frame, expression] pairs, first applies from the shot start
 };
+export type PropPlaceT = { id: string; name?: string; group?: string; at: string; dx?: number; dz?: number; dy?: number; face?: string; yaw?: number; scale?: number; speed?: number; seed?: number };
 export type Shot = {
-  id: number; a: number; b: number; kit: string; seed?: number; light?: Light;
+  id: number; a: number; b: number; kit: string; seed?: number; light?: Light; props?: PropPlaceT[];
   camera: CamSpec; chars: CharSpec[]; dof?: number; focus?: "subject" | "chars";
 };
 export type Action = { id: string; at: string; f: number; f1?: number; p?: Record<string, number | string | boolean> };

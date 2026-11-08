@@ -53,7 +53,9 @@ def resolve(story, words, cat):
             raise StoryError(f"shot {i + 1}: word '{ref}' is not in this shot's text")
         return words[hits[n - 1]][edge]
     kits, cams, outfits, exprs = cat["kits"], cat["cameras"], cat["outfits"], set(cat["expressions"])
-    generic = set(cat["actions"])
+    props_cat = cat.get("props", {})
+    generic = set(cat["actions"]) | set(cat.get("prop_moves", {})) | {a for p in props_cat.values() for a in p.get("acts", {})}
+    story_props = story.get("props", [])
     out_shots, actions, flashes = [], [], []
     default_kit = story.get("kit")
     for i, s in enumerate(shots_in):
@@ -61,6 +63,20 @@ def resolve(story, words, cat):
         kit = s.get("kit", default_kit)
         check(kit in kits, f"shot {i + 1}: unknown kit '{kit}' (choose from {sorted(kits)})")
         K = kits.get(kit, {"anchors": {}, "actions": {}})
+        # props for this shot: the story's props for this kit + the shot's own; placed props become anchors
+        places = [dict(p) for p in story_props if p.get("kit", default_kit) == kit] + [dict(p) for p in s.get("props", [])]
+        names = dict.fromkeys(K["anchors"]); groups = {}
+        for pl in places:
+            pl.pop("kit", None)
+            check(pl.get("id") in props_cat, f"shot {i + 1}: unknown prop '{pl.get('id')}' (choose from {sorted(props_cat)})")
+            check(pl.get("at") in names, f"shot {i + 1}: prop '{pl.get('id')}' at unknown anchor '{pl.get('at')}'")
+            if "face" in pl: check(pl["face"] in names, f"shot {i + 1}: prop '{pl.get('id')}' faces unknown anchor '{pl['face']}'")
+            base = pl.get("name", pl.get("id")); nm, k = base, 2
+            while nm in names: nm = f"{base}-{k}"; k += 1
+            names[nm] = None
+            if "group" in pl: groups[pl["group"]] = None
+        names.update(groups)
+        K = dict(K, anchors=names)
         cam = dict(s.get("camera", {"id": "push-in"}))
         check(cam.get("id") in cams, f"shot {i + 1}: unknown camera '{cam.get('id')}' (choose from {sorted(cams)})")
         check(cam.get("subject") in K["anchors"], f"shot {i + 1}: kit '{kit}' has no anchor '{cam.get('subject')}' (choose from {sorted(K['anchors'])})")
@@ -88,7 +104,7 @@ def resolve(story, words, cat):
             if "until" in act: A["f1"] = fr(word_at(i, act["until"], "e"))
             A["shot"] = i + 1
             actions.append(A)
-        sh = {"id": i + 1, "a": a, "b": b, "kit": kit, "camera": cam, "chars": chars, "light": s.get("light", story.get("light", "day")),
+        sh = {"id": i + 1, "a": a, "b": b, "kit": kit, "camera": cam, "chars": chars, "props": places, "light": s.get("light", story.get("light", "day")),
               "mood": s.get("mood") or ("hook" if i == 0 else "finale" if i == len(shots_in) - 1 else "impact" if any(x["id"] in ("fire", "explode") for x in s.get("actions", [])) else "build")}
         for k in ("dof", "focus", "seed"):
             if k in s: sh[k] = s[k]

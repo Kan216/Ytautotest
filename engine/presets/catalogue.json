@@ -1,4 +1,250 @@
 {
+ "props": {
+  "elephant": {
+   "desc": "grey elephant with big ears, trunk and tusks",
+   "cat": "animal",
+   "move": "run",
+   "acts": {
+    "trumpet": "raises its trunk and trumpets"
+   }
+  },
+  "giraffe": {
+   "desc": "tall spotted giraffe",
+   "cat": "animal",
+   "move": "run"
+  },
+  "lion": {
+   "desc": "lion with a big mane",
+   "cat": "animal",
+   "move": "run",
+   "acts": {
+    "roar": "rears its head and roars"
+   }
+  },
+  "zebra": {
+   "desc": "striped zebra",
+   "cat": "animal",
+   "move": "run"
+  },
+  "horse": {
+   "desc": "brown horse with a dark mane",
+   "cat": "animal",
+   "move": "run"
+  },
+  "cow": {
+   "desc": "black-and-white cow",
+   "cat": "animal",
+   "move": "run",
+   "acts": {
+    "moo": "lifts its head and moos"
+   }
+  },
+  "dog": {
+   "desc": "small friendly dog",
+   "cat": "animal",
+   "move": "run",
+   "acts": {
+    "bark": "barks with a head bob"
+   }
+  },
+  "camel": {
+   "desc": "camel with one hump",
+   "cat": "animal",
+   "move": "run"
+  },
+  "birds": {
+   "desc": "a flock of seven birds flapping across the sky",
+   "cat": "animal",
+   "move": "fly"
+  },
+  "car": {
+   "desc": "small red car",
+   "cat": "vehicle",
+   "move": "drive",
+   "acts": {
+    "honk": "honks its horn"
+   }
+  },
+  "car-blue": {
+   "desc": "small blue car",
+   "cat": "vehicle",
+   "move": "drive",
+   "acts": {
+    "honk": "honks its horn"
+   }
+  },
+  "taxi": {
+   "desc": "yellow taxi",
+   "cat": "vehicle",
+   "move": "drive",
+   "acts": {
+    "honk": "honks its horn"
+   }
+  },
+  "bus": {
+   "desc": "long green city bus",
+   "cat": "vehicle",
+   "move": "drive",
+   "acts": {
+    "honk": "honks its horn"
+   }
+  },
+  "jeep": {
+   "desc": "open safari jeep",
+   "cat": "vehicle",
+   "move": "drive"
+  },
+  "cannon": {
+   "desc": "old field cannon on two wheels (fire)",
+   "cat": "vehicle",
+   "fire": true
+  },
+  "rowboat": {
+   "desc": "small wooden rowboat (for water)",
+   "cat": "vehicle",
+   "move": "drive"
+  },
+  "sailboat": {
+   "desc": "white sailboat with a triangular sail (for water)",
+   "cat": "vehicle",
+   "move": "drive"
+  },
+  "plane": {
+   "desc": "old propeller plane (fly)",
+   "cat": "vehicle",
+   "move": "fly"
+  },
+  "tank": {
+   "desc": "green army tank with a turret gun (fire)",
+   "cat": "vehicle",
+   "move": "drive",
+   "fire": true
+  },
+  "acacia": {
+   "desc": "flat-topped acacia tree",
+   "cat": "nature"
+  },
+  "palm": {
+   "desc": "palm tree",
+   "cat": "nature"
+  },
+  "pine": {
+   "desc": "dark green pine tree",
+   "cat": "nature"
+  },
+  "oak": {
+   "desc": "round leafy tree",
+   "cat": "nature"
+  },
+  "bush": {
+   "desc": "small round bush",
+   "cat": "nature"
+  },
+  "rock": {
+   "desc": "big boulder",
+   "cat": "nature"
+  },
+  "cactus": {
+   "desc": "desert cactus with two arms",
+   "cat": "nature"
+  },
+  "log": {
+   "desc": "fallen log",
+   "cat": "nature"
+  },
+  "flowers": {
+   "desc": "patch of colourful flowers",
+   "cat": "nature"
+  },
+  "house": {
+   "desc": "cottage with a red gable roof",
+   "cat": "building"
+  },
+  "barn": {
+   "desc": "big red barn",
+   "cat": "building"
+  },
+  "hut": {
+   "desc": "round hut with a thatched roof",
+   "cat": "building"
+  },
+  "tent": {
+   "desc": "canvas army tent",
+   "cat": "building"
+  },
+  "castle-tower": {
+   "desc": "round stone castle tower with battlements",
+   "cat": "building"
+  },
+  "lighthouse": {
+   "desc": "red-and-white striped lighthouse",
+   "cat": "building"
+  },
+  "windmill": {
+   "desc": "white windmill with turning sails",
+   "cat": "building"
+  },
+  "pyramid": {
+   "desc": "sandstone pyramid",
+   "cat": "building"
+  },
+  "crate": {
+   "desc": "wooden crate",
+   "cat": "object"
+  },
+  "barrel": {
+   "desc": "wooden barrel",
+   "cat": "object"
+  },
+  "campfire": {
+   "desc": "crackling campfire with stones",
+   "cat": "object"
+  },
+  "flagpole": {
+   "desc": "tall flagpole with a waving flag (plain colour)",
+   "cat": "object"
+  },
+  "lamppost": {
+   "desc": "old street lamp",
+   "cat": "object"
+  },
+  "bench": {
+   "desc": "park bench",
+   "cat": "object"
+  },
+  "signpost": {
+   "desc": "wooden signpost with two blank arrows",
+   "cat": "object"
+  },
+  "table": {
+   "desc": "wooden table",
+   "cat": "object"
+  },
+  "chest": {
+   "desc": "treasure chest (opens)",
+   "cat": "object",
+   "acts": {
+    "open": "the lid opens and gold glows"
+   }
+  },
+  "well": {
+   "desc": "stone well with a little roof",
+   "cat": "object"
+  },
+  "traffic-light": {
+   "desc": "traffic light that cycles red-amber-green",
+   "cat": "object"
+  },
+  "telescope": {
+   "desc": "brass telescope on a tripod",
+   "cat": "object"
+  }
+ },
+ "prop_moves": {
+  "run": "animals gallop along their heading (p.speed m/s)",
+  "drive": "vehicles drive along their heading",
+  "fly": "flyers move forward and climb"
+ },
  "kits": {
   "harbour": {
    "desc": "old colonial harbour: palace with verandas, clock tower, flag, white town, palms, beach, warships, yacht",
@@ -23,6 +269,46 @@
     "clock-sweep": "clock hands sweep from p.from to p.to minutes past nine (on -> until)",
     "flag-fall": "the palace flagpole snaps and the flag falls"
    }
+  },
+  "space": {
+   "desc": "Moon base under a starry sky: rocket on a launch pad, Earth and a ringed planet in the sky, lander, dome base, flag, satellite",
+   "ambience": "space",
+   "anchors": {
+    "rocket": "the whole rocket (follows it after launch)",
+    "rocket-top": "the rocket's nose and window",
+    "rocket-base": "the rocket's engines at the bottom",
+    "pad": "the launch pad with its red service tower",
+    "earth": "the Earth hanging in the sky",
+    "planet": "a ringed planet in the sky",
+    "lander": "a gold lunar lander on legs",
+    "base": "white dome moon base",
+    "moon-flag": "a flag planted in the dust",
+    "crater": "a large crater",
+    "surface": "wide view of the grey cratered surface",
+    "satellite": "a satellite crossing the sky",
+    "lookout": "standing on the surface facing the launch pad (use with from-to)"
+   },
+   "actions": {
+    "launch": "the rocket ignites and lifts off: flame, smoke clouds, shaking (on -> keeps rising)"
+   }
+  },
+  "savanna": {
+   "desc": "African savanna: golden grass, acacia trees, snowy mountain, waterhole, big rock, elephant, giraffe, lion, zebra herd",
+   "ambience": "savanna",
+   "anchors": {
+    "elephant": "an elephant",
+    "giraffe": "a giraffe",
+    "lion": "a lion in front of the rocks",
+    "zebras": "a herd of nine zebras",
+    "waterhole": "a waterhole",
+    "acacia": "a flat-topped acacia tree",
+    "rock": "a big rock outcrop",
+    "mountain": "a snow-capped mountain far away",
+    "plain": "wide view of the grassland",
+    "lookout": "standing in the grass facing the animals (use with from-to)",
+    "herd-spot": "open grass where the zebra herd grazes"
+   },
+   "actions": {}
   }
  },
  "cameras": {
