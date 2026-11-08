@@ -15,7 +15,7 @@ export const ACTIONS: Record<string, string> = {
   "flash": "white flash on the cut (use as a shot 'transition' instead)",
 };
 /** actions that shake the camera by default, and how hard */
-export const KICK: Record<string, number> = { fire: 1.2, explode: 1.1, kick: 1.0 };
+export const KICK: Record<string, number> = { fire: 1.2, explode: 1.1, kick: 1.0, launch: 0.7, roar: 0.5, crash: 1.2 };
 
 let tex: { gold: THREE.Texture[]; fire: THREE.Texture[]; light: THREE.Texture[]; dark: THREE.Texture[] } | null = null;
 const T = () => (tex ??= {

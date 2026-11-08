@@ -37,7 +37,7 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
     const kit = KITS[shot.kit];
     if (!kit) throw new Error(`unknown kit "${shot.kit}"`);
     const W = kit.build(shot.seed ?? 0);
-    const env = new Env(W.root, W.water);
+    const env = new Env(W.root, W.water, W.sky);
     const sc = new ShotCamera(shot.camera, W);
     const st = sc.start(), sun = env.sunDir(st);
     const cards = shot.chars.map(() => new Card(W.root));
@@ -74,7 +74,10 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
 
   // ---- pose the frame ----
   const t = f / tl.fps, u = (f - shot.a) / Math.max(1, shot.b - shot.a);
-  const c = applyKick(S.sc.at(u), kickAt(f, S.kicks));
+  let c = S.sc.at(u);
+  const trk = shot.camera.follow !== false ? S.subj.track?.(t, tl.actions, tl.fps) : undefined;
+  if (trk) c = { ...c, pos: [c.pos[0] + trk[0] * 0.3, c.pos[1] + trk[1] * 0.55, c.pos[2] + trk[2] * 0.3], look: [c.look[0] + trk[0], c.look[1] + trk[1], c.look[2] + trk[2]] };
+  c = applyKick(c, kickAt(f, S.kicks));
   cam.position.set(...c.pos); cam.up.set(0, 1, 0); cam.lookAt(...c.look); cam.rotateZ(c.roll);
   cam.fov = c.fov; cam.near = 0.2; cam.far = 2600; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
   cam.layers.enable(3);
@@ -94,7 +97,7 @@ const ShotScene: React.FC<{ shot: Shot; tl: Timeline; post: Props["post"] }> = (
   // lens: focus on the first character, or the subject
   cam.getWorldDirection(fwd);
   if (shot.focus === "chars" && S.charPos[0]) fpt.set(S.charPos[0][0], S.charPos[0][1] + 1.6, S.charPos[0][2]);
-  else fpt.set(...S.subj.p);
+  else { fpt.set(...S.subj.p); if (trk) fpt.add(new THREE.Vector3(...trk)); }
   fxp.lens.focus = Math.max(0.3, fpt.sub(cam.position).dot(fwd));
   fxp.lens.cInf = shot.dof ?? 0;
   gradeFor(fxp.grade, shot.light ?? "day");

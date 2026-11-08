@@ -6,16 +6,19 @@ import { LIGHTS, LOOK } from "./lights";
 import { TONE, CHAR, untone } from "./shade";
 import { NOINK } from "./ink";
 import { waterMat, WATER, WaterPal } from "./water";
-import { Light } from "./types";
+import { Light, KitWorld } from "./types";
 
 export class Env {
   private sky: THREE.Mesh; private skyMat: THREE.ShaderMaterial;
   private hemi: THREE.HemisphereLight; private sun: THREE.DirectionalLight;
   private fog = new THREE.Fog("#b8d0ec", 260, 1500);
   private clouds: THREE.Mesh[] = [];
+  private stars?: THREE.Points;
   private water?: THREE.Mesh; private wmat?: THREE.ShaderMaterial; private pal: WaterPal;
 
-  constructor(root: THREE.Object3D, water?: { shoreZ: number | null; pal?: WaterPal }) {
+  private skyO?: KitWorld["sky"];
+  constructor(root: THREE.Object3D, water?: { shoreZ: number | null; pal?: WaterPal }, sky?: KitWorld["sky"]) {
+    this.skyO = sky;
     this.skyMat = new THREE.ShaderMaterial({
       uniforms: { c0: { value: new THREE.Color() }, c1: { value: new THREE.Color() }, c2: { value: new THREE.Color() }, c3: { value: new THREE.Color() }, c4: { value: new THREE.Color() }, e: { value: new THREE.Vector4() } },
       vertexShader: "varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
@@ -37,6 +40,17 @@ export class Env {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: cmaps[i % 4], color: new THREE.Color(1.1, 1.1, 1.1), transparent: true, depthWrite: false, fog: false }));
       m.position.set(Math.cos(a) * d, 110 + (i % 4) * 40, Math.sin(a) * d); m.scale.set(w, w / 2, 1); m.layers.set(NOINK);
       this.clouds.push(m); root.add(m);
+    }
+    if (sky?.clouds === false) for (const m of this.clouds) m.visible = false;
+    if (sky?.stars) { // star field on the sky dome
+      const n = 2500, pos = new Float32Array(n * 3), r = (k: number) => { const x = Math.sin(k * 12.9898) * 43758.5453; return x - Math.floor(x); };
+      for (let i = 0; i < n; i++) {
+        const u = r(i * 3 + 1) * 2 - 1, a = r(i * 3 + 2) * Math.PI * 2, y = Math.abs(u) * 0.95 + 0.02, h = Math.sqrt(1 - y * y);
+        pos.set([Math.cos(a) * h * 1200, y * 1200, Math.sin(a) * h * 1200], i * 3);
+      }
+      const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      this.stars = new THREE.Points(g, new THREE.PointsMaterial({ color: new THREE.Color(1.6, 1.6, 1.7), size: 2.2, sizeAttenuation: false, fog: false, depthWrite: false }));
+      this.stars.layers.set(NOINK); this.stars.frustumCulled = false; this.stars.renderOrder = -0.9; root.add(this.stars);
     }
     this.pal = water?.pal ?? WATER;
     if (water) {
@@ -67,16 +81,19 @@ export class Env {
     CHAR.uCharTint.value.set(...L.charTint); CHAR.uCharShade.value = L.charShade; CHAR.uGrad.value = L.charGrad;
     CHAR.uBodyGrad.value = L.bodyGrad; CHAR.uSideTint.value.set(...L.sideTint);
     const su = this.skyMat.uniforms;
-    K.sky.c.forEach((h, i) => untone(h, su["c" + i].value));
-    const e = K.sky.e.map((d) => THREE.MathUtils.degToRad(d)); su.e.value.set(e[1], e[2], e[3], e[4]);
+    const SK = this.skyO ?? K.sky;
+    SK.c.forEach((h, i) => untone(h, su["c" + i].value));
+    const e = SK.e.map((d) => THREE.MathUtils.degToRad(d)); su.e.value.set(e[1], e[2], e[3], e[4]);
     this.sky.position.copy(cam.position);
-    untone(L.fog, this.fog.color);
+    if (this.stars) this.stars.position.copy(cam.position);
+    untone(this.skyO?.fog ?? L.fog, this.fog.color);
+    this.fog.near = this.skyO?.fogNear ?? 260; this.fog.far = this.skyO?.fogFar ?? 1500;
     scene.fog = this.fog; scene.background = null;
     for (const m of this.clouds) m.lookAt(cam.position.x, m.position.y, cam.position.z);
     if (this.wmat) {
       const wu = this.wmat.uniforms, P = this.pal;
       untone(P.near, wu.cNear.value); untone(P.mid, wu.cMid.value); untone(P.far, wu.cFar.value); untone(P.shallow, wu.cShallow.value);
-      untone(P.crest, wu.cCrest.value); untone(P.trough, wu.cTrough.value); untone(P.glint, wu.cGlint.value); untone(L.fog, wu.cFog.value);
+      untone(P.crest, wu.cCrest.value); untone(P.trough, wu.cTrough.value); untone(P.glint, wu.cGlint.value); untone(this.skyO?.fog ?? L.fog, wu.cFog.value);
       wu.time.value = t; wu.camPos.value.copy(cam.position); wu.fogNear.value = 300; wu.fogFar.value = 1400;
     }
   }
