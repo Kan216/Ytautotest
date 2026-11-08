@@ -54,4 +54,5 @@ It needs internet access to `speech.platform.bing.com`.
 ## Rules and limits
 - Respect the user rules from the main skill: English only, one steady tone, no captions burned in. `words.srt` is for checking timings only.
 - The service is unofficial and free. If a request fails, wait and retry. On an error about the clock or `403`, update with `pip install -U edge-tts`.
+- **No access to Microsoft's server** (for example a locked-down cloud sandbox): `productions/zanzibar/voice/kokoro_voice.py` is an offline fallback. It uses the open-source Kokoro voice, downloaded from GitHub, and writes the same `voice.wav`, `words.json` and `words.srt` with word timings from the model itself.
 - Microsoft's voices are fine for personal and creative use, but check Microsoft's terms before commercial or monetised use. Never imitate a real person's voice.
