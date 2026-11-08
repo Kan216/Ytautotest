@@ -40,6 +40,7 @@ User rules that apply:
    - **Callback twist:** the ending.
    - Never describe on screen what the viewer already sees.
 3. **Voice.** Record or generate `voice.wav`, then make its word timings `words.json` (any speech-to-text with word times).
+   - Free option: the `edge-tts-voice` skill (`skills/edge-tts-voice/`) writes both `voice.wav` and `words.json` in one step, with no API key.
    - Put them in the project folder, e.g. `~/bridge-short/voice/`.
    - Hand-fix the word timings. Everything is timed to words.json.
 4. **Shot plan** in `story.ts`: copy `templates/bridge/` (the final bridge source, same as `src/videos/bridge/` of your Remotion project) to `src/videos/<name>/`, register a new composition next to `BridgeShort` in `src/Root.tsx`, and rename it.
