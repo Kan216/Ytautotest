@@ -1,0 +1,108 @@
+{
+ "kits": {
+  "harbour": {
+   "desc": "old colonial harbour: palace with verandas, clock tower, flag, white town, palms, beach, warships, yacht",
+   "ambience": "harbour",
+   "anchors": {
+    "clock": "the clock face on the tower (close-ups of time)",
+    "tower": "the whole clock tower",
+    "palace": "the palace building",
+    "palace-flag": "the flag on the palace roof",
+    "palace-hits": "points on the palace front (explosions)",
+    "town": "the whitewashed town behind the waterfront",
+    "beach": "the beach and shoreline",
+    "fleet": "a line of five warships (aerial view down the line)",
+    "fleet-guns": "all the warships' broadside guns (fire)",
+    "flagship": "the lead warship",
+    "yacht": "a small white royal yacht",
+    "deck": "standing on the flagship's bow deck, facing the palace (use with from-to)",
+    "bridge-wing": "standing on the flagship near the bridge, facing the palace (use with from-to)",
+    "deck-gun": "the bow deck gun's muzzle (fire)"
+   },
+   "actions": {
+    "clock-sweep": "clock hands sweep from p.from to p.to minutes past nine (on -> until)",
+    "flag-fall": "the palace flagpole snaps and the flag falls"
+   }
+  }
+ },
+ "cameras": {
+  "push-in": "slow push in toward the subject (default, calm emphasis)",
+  "push-in-fast": "quick push in for a punch line or shock",
+  "pull-out": "start close, pull back to reveal the surroundings",
+  "orbit-left": "circle around the subject to the left",
+  "orbit-right": "circle around the subject to the right",
+  "aerial": "high establishing view gliding over the subject",
+  "low-angle": "low camera looking up: makes the subject look big or heroic",
+  "truck-left": "camera slides sideways to the left past the subject",
+  "truck-right": "camera slides sideways to the right past the subject",
+  "tilt-up": "starts low on the subject and tilts up to its top",
+  "static": "locked-off framing, no movement",
+  "dutch": "tilted, uneasy framing with a slow push (tension)",
+  "from-to": "point of view from one anchor (use 'from') looking at the subject; characters stand in front"
+ },
+ "actions": {
+  "fire": "gun/cannon shot at the anchor's points: muzzle flash, smoke puff, camera kick (p: stagger s, size m)",
+  "explode": "explosion at the anchor's points, then smoke columns that keep rising (p: stagger s, size m)",
+  "smoke": "a column of dark smoke rising from the anchor from this moment on",
+  "dust": "a puff of dust at the anchor (landing, running, impact on ground)",
+  "kick": "camera shake on this word (p: strength 0.3-1.5)",
+  "flash": "white flash on the cut (use as a shot 'transition' instead)"
+ },
+ "outfits": {
+  "sailor": "navy sailor, white cap",
+  "sailor-2": "navy sailor with moustache",
+  "admiral": "naval officer, dark coat, gold buttons, sword",
+  "soldier": "green-coated rifleman with shako",
+  "redcoat": "red-coated soldier with shako and rifle",
+  "officer": "army officer, tall shako, sash, sword",
+  "king": "ruler in purple with gold buttons",
+  "scientist": "white lab coat",
+  "astronaut": "white space suit with cap",
+  "engineer": "orange overalls, cap",
+  "ranger": "safari ranger in khaki",
+  "explorer": "old-time explorer, top hat",
+  "office": "office worker in a blue suit",
+  "police": "police officer, navy uniform, cap",
+  "chef": "cook in white",
+  "kid": "kid in an orange top and red cap",
+  "woman": "woman in a dress and bonnet",
+  "townsman": "man in a coat and top hat",
+  "farmer": "farmer in green with a cap"
+ },
+ "expressions": [
+  "neutral",
+  "stern",
+  "grin",
+  "laugh",
+  "whistle",
+  "nervous",
+  "shock",
+  "relief",
+  "relief_open",
+  "dazed",
+  "pained",
+  "smile",
+  "smile_closed"
+ ],
+ "transitions": {
+  "cut": "plain cut (default)",
+  "flash": "white flash on the cut"
+ },
+ "moods": {
+  "hook": "opening question, sparse music",
+  "build": "rising, rhythmic",
+  "impact": "stop-time, hits on actions",
+  "finale": "resolving chord at the end",
+  "calm": "soft pad only"
+ },
+ "music": {
+  "march": "brass + snare, minor to major (history, war)",
+  "space": "synth pads and pulses (science, space)",
+  "nature": "plucked strings and marimba-like tones (animals, nature)",
+  "modern": "upbeat plucks and claps (everyday, city)"
+ },
+ "lights": {
+  "day": "midday sun",
+  "golden": "low warm sunset light"
+ }
+}

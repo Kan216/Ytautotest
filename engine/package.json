@@ -1,0 +1,29 @@
+{
+  "name": "short-engine",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Preset-driven cartoon short engine (three.js inside Remotion)",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "still": "remotion still src/index.ts ZanzibarShort",
+    "render": "remotion render src/index.ts ZanzibarShort out/video.mp4 --codec h264 --crf 16 --gl=angle"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@react-three/postprocessing": "3.2.1",
+    "@remotion/bundler": "^4.0.537",
+    "@remotion/cli": "4.0.537",
+    "@remotion/renderer": "^4.0.537",
+    "@remotion/three": "4.0.537",
+    "postprocessing": "6.39.5",
+    "react": "19.1.10",
+    "react-dom": "19.1.10",
+    "remotion": "4.0.537",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "@types/three": "0.186.0",
+    "typescript": "5.9.3"
+  }
+}
