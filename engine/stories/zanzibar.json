@@ -1,28 +1,148 @@
 {
  "title": "The 38-Minute War",
- "voice": { "engine": "kokoro", "name": "am_michael", "speed": 1.1 },
+ "voice": {
+  "engine": "edge",
+  "name": "en-US-GuyNeural"
+ },
  "music": "march",
  "kit": "harbour",
  "shots": [
-  { "text": "Did you know the shortest war in history lasted just thirty-eight minutes?",
-    "camera": { "id": "push-in", "subject": "clock", "dist": 1.6 }, "dof": 10,
-    "actions": [ { "id": "clock-sweep", "at": "clock", "on": "lasted", "until": "minutes", "p": { "from": 2, "to": 40 } } ] },
-  { "text": "In eighteen ninety-six, Britain", "transition": "flash",
-    "camera": { "id": "aerial", "subject": "fleet" } },
-  { "text": "fought Zanzibar.",
-    "camera": { "id": "low-angle", "subject": "palace" } },
-  { "text": "The British won so",
-    "camera": { "id": "from-to", "from": "deck", "subject": "palace" }, "dof": 11, "focus": "chars",
-    "chars": [ { "outfit": "sailor", "place": "left", "expr": "stern", "react": [ { "on": "British", "expr": "grin" } ] },
-               { "outfit": "sailor-2", "place": "right", "dist": 6.4, "expr": "stern", "react": [ { "on": "British", "expr": "shock" } ] } ],
-    "actions": [ { "id": "fire", "at": "deck-gun", "on": "British", "offset": 0.05 },
-                 { "id": "fire", "at": "fleet-guns", "on": "won", "p": { "stagger": 0.05, "kick": 0.5 } } ] },
-  { "text": "quickly",
-    "camera": { "id": "push-in-fast", "subject": "palace" },
-    "actions": [ { "id": "explode", "at": "palace-hits", "on": "quickly", "offset": -0.1, "p": { "stagger": 0.14 } },
-                 { "id": "flag-fall", "at": "palace-flag", "on": "quickly", "offset": -0.1 } ] },
-  { "text": "that history still remembers it as the shortest war ever!",
-    "camera": { "id": "from-to", "from": "bridge-wing", "subject": "palace", "fov": 36 }, "dof": 8, "focus": "chars",
-    "chars": [ { "outfit": "admiral", "place": "left", "dist": 6.2, "expr": "neutral", "react": [ { "on": "ever", "expr": "smile" } ] } ] }
+  {
+   "text": "Did you know the shortest war in history lasted just thirty-eight minutes?",
+   "camera": {
+    "id": "push-in",
+    "subject": "clock",
+    "dist": 1.6
+   },
+   "dof": 10,
+   "actions": [
+    {
+     "id": "clock-sweep",
+     "at": "clock",
+     "on": "lasted",
+     "until": "minutes",
+     "p": {
+      "from": 2,
+      "to": 40
+     }
+    }
+   ]
+  },
+  {
+   "text": "In eighteen ninety-six, Britain",
+   "transition": "flash",
+   "camera": {
+    "id": "aerial",
+    "subject": "fleet"
+   }
+  },
+  {
+   "text": "fought Zanzibar.",
+   "camera": {
+    "id": "low-angle",
+    "subject": "palace"
+   }
+  },
+  {
+   "text": "The British won so",
+   "camera": {
+    "id": "from-to",
+    "from": "deck",
+    "subject": "palace"
+   },
+   "dof": 11,
+   "focus": "chars",
+   "chars": [
+    {
+     "outfit": "sailor",
+     "place": "left",
+     "expr": "stern",
+     "react": [
+      {
+       "on": "British",
+       "expr": "grin"
+      }
+     ]
+    },
+    {
+     "outfit": "sailor-2",
+     "place": "right",
+     "dist": 6.4,
+     "expr": "stern",
+     "react": [
+      {
+       "on": "British",
+       "expr": "shock"
+      }
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "id": "fire",
+     "at": "deck-gun",
+     "on": "British",
+     "offset": 0.05
+    },
+    {
+     "id": "fire",
+     "at": "fleet-guns",
+     "on": "won",
+     "p": {
+      "stagger": 0.05,
+      "kick": 0.5
+     }
+    }
+   ]
+  },
+  {
+   "text": "quickly",
+   "camera": {
+    "id": "push-in-fast",
+    "subject": "palace"
+   },
+   "actions": [
+    {
+     "id": "explode",
+     "at": "palace-hits",
+     "on": "quickly",
+     "offset": -0.1,
+     "p": {
+      "stagger": 0.14
+     }
+    },
+    {
+     "id": "flag-fall",
+     "at": "palace-flag",
+     "on": "quickly",
+     "offset": -0.1
+    }
+   ]
+  },
+  {
+   "text": "that history still remembers it as the shortest war ever!",
+   "camera": {
+    "id": "from-to",
+    "from": "bridge-wing",
+    "subject": "palace",
+    "fov": 36
+   },
+   "dof": 8,
+   "focus": "chars",
+   "chars": [
+    {
+     "outfit": "admiral",
+     "place": "left",
+     "dist": 6.2,
+     "expr": "neutral",
+     "react": [
+      {
+       "on": "ever",
+       "expr": "smile"
+      }
+     ]
+    }
+   ]
+  }
  ]
 }

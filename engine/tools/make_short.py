@@ -15,6 +15,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ENGINE = os.path.dirname(HERE
 PY = sys.executable
 
 def run(cmd, **kw):
+    if isinstance(cmd, list) and cmd and shutil.which(cmd[0]):   # Windows: npx -> npx.cmd, node -> node.exe
+        cmd = [shutil.which(cmd[0])] + cmd[1:]
     print("  $", " ".join(cmd) if isinstance(cmd, list) else cmd, flush=True)
     r = subprocess.run(cmd, cwd=kw.pop("cwd", ENGINE), **kw)
     if r.returncode: sys.exit(f"step failed ({r.returncode}): {cmd[0] if isinstance(cmd, list) else cmd}")
@@ -63,6 +65,7 @@ def main():
     os.makedirs(env["TMPDIR"], exist_ok=True)
     if a.stills:
         if chrome: env["CHROME"] = a.chrome
+        else: env.pop("CHROME", None)
         run(["node", "tools/stills.mjs", tl, os.path.join(out, "stills", "s_"), a.stills, "0.5"], env=env)
         fr = [os.path.join(out, "stills", f"s_{int(x):04d}.png") for x in a.stills.split(",")]
         run([PY, os.path.join(HERE, "sheet.py"), os.path.join(out, "stills.jpg")] + fr)

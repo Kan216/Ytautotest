@@ -1,12 +1,13 @@
 // Test stills of a timeline: node tools/stills.mjs out/x/timeline.json out/x/stills/s_ 0,60,120 [scale]
 import { bundle } from "@remotion/bundler";
 import { renderStill, selectComposition, openBrowser } from "@remotion/renderer";
-import { readFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync, existsSync } from "node:fs";
 import path from "node:path";
 const [tlPath, prefix, list, scale = "0.5"] = process.argv.slice(2);
 process.env.TMPDIR = process.env.TMPDIR || "/home/user/rtmp";
-const exe = process.env.CHROME || "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell";
-const gl = process.env.GL || "swangle";
+const def = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell";
+const exe = process.env.CHROME || (existsSync(def) ? def : undefined); // undefined: Remotion uses its own downloaded browser
+const gl = process.env.GL || (process.platform === "linux" ? "swangle" : "angle");
 const inputProps = { timeline: JSON.parse(readFileSync(tlPath, "utf8")) };
 mkdirSync(path.dirname(prefix), { recursive: true });
 const serveUrl = await bundle({ entryPoint: path.resolve("src/index.ts") });
